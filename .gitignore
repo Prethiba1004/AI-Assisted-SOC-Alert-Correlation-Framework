@@ -1,0 +1,23 @@
+# Python virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment secrets
+.env
+.env.*
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+Thumbs.db
+.DS_Store
+
+# Installation files
+Git-2.56.0.4-64-bit.exe
+python-3.12.10-amd64.exe

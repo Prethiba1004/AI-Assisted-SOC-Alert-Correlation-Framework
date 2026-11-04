@@ -1,0 +1,5 @@
+timestamp,source,hostname,username,event_id,description
+2026-11-04 10:30:00,Windows Sysmon,WINDOWS-LAB,labuser,1,PowerShell process created
+2026-11-04 10:35:00,Kali Linux,KALI-LAB,kaliuser,sshd,Failed password from 192.168.1.50
+2026-11-04T10:40:00Z,Elastic Security,WINDOWS-LAB,administrator,4625,Failed logon attempt detected
+2026-11-04 11:00:00,Correlation Test,LINUX-TEST,labuser,TEST-USER-01,Testing same username correlation
