@@ -1,0 +1,5 @@
+event_index,dbscan_label,hdbscan_label,dbscan_type,hdbscan_type
+0,-1,-1,Noise,Noise
+1,0,-1,Cluster,Noise
+2,0,-1,Cluster,Noise
+3,-1,-1,Noise,Noise
