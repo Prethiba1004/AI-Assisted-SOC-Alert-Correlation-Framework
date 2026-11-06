@@ -1,0 +1,35 @@
+DBSCAN VS HDBSCAN EXPERIMENTAL REPORT
+==================================================
+
+1. DATASET INFORMATION
+Total synthetic security events: 4
+Feature extraction: Sentence-BERT
+Embedding dimensions: 384
+
+2. CLUSTERING EVALUATION
+algorithm  total_events  clusters  clustered_events  noise_events silhouette_score
+   DBSCAN             4         1                 2             2   Not Applicable
+  HDBSCAN             4         0                 0             4   Not Applicable
+
+3. EVENT-LEVEL COMPARISON
+ event_index  dbscan_label  hdbscan_label dbscan_type hdbscan_type
+           0            -1             -1       Noise        Noise
+           1             0             -1     Cluster        Noise
+           2             0             -1     Cluster        Noise
+           3            -1             -1       Noise        Noise
+
+4. RESEARCH OBSERVATIONS
+- DBSCAN identified one cluster containing two events.
+- HDBSCAN classified all four events as noise.
+- Both algorithms identified two events as noise in DBSCAN, while HDBSCAN identified all four as noise.
+- Silhouette Score was not applicable because neither algorithm produced at least two non-noise clusters.
+
+5. RESEARCH LIMITATIONS
+- The experiment uses only four synthetic security events.
+- Results are proof-of-concept observations.
+- Larger datasets and parameter experiments are required.
+- Noise events must be preserved for SOC analyst review.
+- Similarity or clustering does not prove a common incident.
+
+6. CONCLUSION
+DBSCAN and HDBSCAN demonstrated different clustering behaviour on the current Sentence-BERT embeddings. Further experiments with larger datasets are required before drawing general performance conclusions.

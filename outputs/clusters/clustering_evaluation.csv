@@ -1,0 +1,3 @@
+algorithm,total_events,clusters,clustered_events,noise_events,silhouette_score
+DBSCAN,4,1,2,2,Not Applicable
+HDBSCAN,4,0,0,4,Not Applicable
