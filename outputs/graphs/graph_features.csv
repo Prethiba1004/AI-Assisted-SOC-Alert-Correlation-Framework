@@ -1,0 +1,5 @@
+node_id,event_description,hostname,username,degree,degree_centrality,betweenness_centrality,closeness_centrality,weighted_degree
+0,PowerShell process created,WINDOWS-LAB,labuser,3,1.0,0.6666666666666666,1.0,100.0
+1,Failed password from 192.168.1.50,KALI-LAB,kaliuser,2,0.6666666666666666,0.0,0.75,40.0
+2,Failed logon attempt detected,WINDOWS-LAB,administrator,2,0.6666666666666666,0.0,0.75,70.0
+3,Testing same username correlation,LINUX-TEST,labuser,1,0.3333333333333333,0.0,0.6,30.0
