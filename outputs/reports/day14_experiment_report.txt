@@ -1,0 +1,90 @@
+DAY 14: SIMILARITY WEIGHTING AND THRESHOLD TESTING
+============================================================
+
+OBJECTIVE
+Evaluate how different semantic and graph similarity weights
+affect event-pair scores and threshold-based candidate selection.
+
+DATASET
+Total events: 4
+Unique event pairs: 6
+Weight configurations: 5
+Threshold values: 0.30, 0.40, 0.50, 0.60, 0.70
+Total weight-threshold experiments: 25
+
+WEIGHT CONFIGURATIONS
+A_80_20: Semantic=80%, Graph=20%
+B_60_40: Semantic=60%, Graph=40%
+C_50_50: Semantic=50%, Graph=50%
+D_40_60: Semantic=40%, Graph=60%
+E_20_80: Semantic=20%, Graph=80%
+
+HIGHEST SCORING EVENT PAIR PER CONFIGURATION
+A_80_20: Event pair 1-2, score=0.6221
+B_60_40: Event pair 0-2, score=0.5347
+C_50_50: Event pair 0-2, score=0.5382
+D_40_60: Event pair 0-2, score=0.5417
+E_20_80: Event pair 0-2, score=0.5486
+
+THRESHOLD EXPERIMENT RESULTS
+
+A_80_20:
+Threshold 0.30: 6 candidate pairs
+Threshold 0.40: 6 candidate pairs
+Threshold 0.50: 3 candidate pairs
+Threshold 0.60: 1 candidate pairs
+Threshold 0.70: 0 candidate pairs
+
+B_60_40:
+Threshold 0.30: 6 candidate pairs
+Threshold 0.40: 3 candidate pairs
+Threshold 0.50: 2 candidate pairs
+Threshold 0.60: 0 candidate pairs
+Threshold 0.70: 0 candidate pairs
+
+C_50_50:
+Threshold 0.30: 5 candidate pairs
+Threshold 0.40: 3 candidate pairs
+Threshold 0.50: 1 candidate pairs
+Threshold 0.60: 0 candidate pairs
+Threshold 0.70: 0 candidate pairs
+
+D_40_60:
+Threshold 0.30: 4 candidate pairs
+Threshold 0.40: 3 candidate pairs
+Threshold 0.50: 1 candidate pairs
+Threshold 0.60: 0 candidate pairs
+Threshold 0.70: 0 candidate pairs
+
+E_20_80:
+Threshold 0.30: 3 candidate pairs
+Threshold 0.40: 1 candidate pairs
+Threshold 0.50: 1 candidate pairs
+Threshold 0.60: 0 candidate pairs
+Threshold 0.70: 0 candidate pairs
+
+KEY OBSERVATIONS
+1. Semantic-heavy weighting gives greater influence to text meaning.
+2. Graph-heavy weighting gives greater influence to graph relationships.
+3. Event pair 1-2 has the highest score in configuration A_80_20.
+4. Event pair 0-2 has the highest score in configuration E_20_80.
+5. Candidate counts change when weights and thresholds change.
+
+METHODOLOGICAL LIMITATIONS
+1. The dataset contains only four synthetic events.
+2. The weight values and thresholds are experimental choices.
+3. No ground-truth incident labels are available for validation.
+4. A high similarity score does not prove a shared security incident.
+5. Accuracy, precision, recall, and production performance have not
+   been established by these experiments.
+
+OUTPUT FILES
+outputs/similarity/weight_comparison.csv
+outputs/similarity/threshold_comparison.csv
+outputs/reports/day14_experiment_report.txt
+
+CONCLUSION
+Day 14 completed the experimental comparison of five hybrid
+similarity weighting configurations across five thresholds.
+The results provide a basis for selecting candidate settings
+for further testing with a larger labelled dataset.
