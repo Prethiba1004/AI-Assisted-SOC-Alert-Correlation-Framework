@@ -1,0 +1,33 @@
+DAY 19: MITRE ATT&CK TECHNIQUE MAPPING
+=======================================================
+
+Total correlated pairs: 3
+Potential technique mappings: 2
+
+Event Pair: 0 - 2
+Descriptions: PowerShell process created | Failed logon attempt detected
+Technique: T1059.001 - PowerShell
+Tactic: Execution
+Status: Potential event-level mapping
+Evidence: PowerShell process created
+Reason: PowerShell process creation is relevant to T1059.001, but process creation alone does not prove malicious execution. Pair linkage also requires analyst validation.
+MITRE URL: https://attack.mitre.org/techniques/T1059/001/
+-------------------------------------------------------
+Event Pair: 0 - 3
+Descriptions: PowerShell process created | Testing same username correlation
+Technique: T1059.001 - PowerShell
+Tactic: Execution
+Status: Potential event-level mapping
+Evidence: PowerShell process created
+Reason: PowerShell process creation is relevant to T1059.001, but process creation alone does not prove malicious execution. Pair linkage also requires analyst validation.
+MITRE URL: https://attack.mitre.org/techniques/T1059/001/
+-------------------------------------------------------
+Event Pair: 1 - 2
+Descriptions: Failed password from 192.168.1.50 | Failed logon attempt detected
+Technique: N/A - No confirmed technique
+Tactic: N/A
+Status: Insufficient evidence
+Evidence: failed password from 192.168.1.50 failed logon attempt detected
+Reason: Authentication failure was observed, but the available evidence does not establish repeated or systematic password guessing. T1110 is therefore not assigned.
+MITRE URL: N/A
+-------------------------------------------------------

@@ -1,0 +1,154 @@
+
+DAY 19 EXPERIMENT REPORT
+============================================================
+
+Project Title:
+A Lightweight Graph-Assisted and Explainable AI Framework
+for SOC Alert Correlation, Clustering and MITRE ATT&CK-
+Enriched Meta-Alert Generation
+
+Experiment:
+MITRE ATT&CK Technique Mapping for Correlated Alerts
+
+Date: 12 November 2026
+Day: 19
+
+1. OBJECTIVE
+------------------------------------------------------------
+The objective of this experiment was to identify potential
+MITRE ATT&CK techniques associated with correlated security
+alert pairs using Python-based mapping logic.
+
+The experiment also aimed to distinguish potential
+technique mappings from cases where available evidence
+was insufficient.
+
+2. TOOLS AND TECHNOLOGIES
+------------------------------------------------------------
+- Python 3.12.10
+- Pandas
+- MITRE ATT&CK Enterprise Framework
+- Day 18 alert correlation output
+- PowerShell
+- Visual Studio Code / Notepad
+
+3. INPUT DATA
+------------------------------------------------------------
+Input file:
+outputs/explanations/alert_correlation_explanations.csv
+
+Total correlated alert pairs: 3
+
+4. METHODOLOGY
+------------------------------------------------------------
+1. Reviewed Day 18 correlated alert pairs.
+2. Studied relevant MITRE ATT&CK tactics and techniques.
+3. Identified potential mappings from event descriptions.
+4. Developed a Python-based technique mapping script.
+5. Applied evidence-based mapping rules.
+6. Generated CSV and text mapping outputs.
+7. Validated technique IDs and output completeness.
+
+5. MITRE ATT&CK MAPPING RESULTS
+------------------------------------------------------------
+
+Pair 0-2:
+Event 1: PowerShell process created
+Event 2: Failed logon attempt detected
+
+Technique ID: T1059.001
+Technique: PowerShell
+Tactic: Execution
+Status: Potential event-level mapping
+
+Observation:
+PowerShell process creation is relevant to T1059.001.
+However, process creation alone does not establish
+malicious execution.
+
+Pair 0-3:
+Event 1: PowerShell process created
+Event 2: Testing same username correlation
+
+Technique ID: T1059.001
+Technique: PowerShell
+Tactic: Execution
+Status: Potential event-level mapping
+
+Observation:
+The PowerShell event has a potential technique mapping.
+The synthetic test event does not automatically establish
+that both events belong to the same attack.
+
+Pair 1-2:
+Event 1: Failed password from 192.168.1.50
+Event 2: Failed logon attempt detected
+
+Technique ID: N/A
+Status: Insufficient evidence
+
+Observation:
+The available authentication failures do not establish
+repeated or systematic password guessing. Therefore,
+T1110 (Brute Force) was not assigned.
+
+6. EXPERIMENT RESULTS
+------------------------------------------------------------
+Total correlated pairs: 3
+Potential technique mappings: 2
+Pairs with insufficient evidence: 1
+
+Potential technique identified:
+T1059.001 - PowerShell
+
+No confirmed malicious technique was established by
+this experiment.
+
+7. VALIDATION
+------------------------------------------------------------
+Total pairs validation: Passed
+Potential mappings validation: Passed
+Insufficient evidence validation: Passed
+Missing values: 0
+PowerShell technique ID validation: Passed
+
+8. OUTPUT FILES
+------------------------------------------------------------
+Python script:
+src/mitre_technique_mapper.py
+
+CSV output:
+outputs/mitre/mitre_technique_mappings.csv
+
+Text output:
+outputs/mitre/mitre_technique_mappings.txt
+
+Experiment report:
+outputs/reports/day19_experiment_report.txt
+
+9. LIMITATIONS
+------------------------------------------------------------
+- The experiment uses only four synthetic security events.
+- Technique mappings are based on event descriptions.
+- PowerShell process creation does not prove malicious activity.
+- Individual authentication failures do not prove brute force.
+- Correlated alerts do not automatically represent one attack.
+- Further validation using command-line details, process
+  telemetry and authentication history is required.
+
+10. CONCLUSION
+------------------------------------------------------------
+The Day 19 experiment successfully implemented a
+Python-based MITRE ATT&CK technique mapping process.
+
+The framework identified two potential event-level
+T1059.001 mappings and correctly avoided assigning
+T1110 without sufficient evidence.
+
+The experiment demonstrates how explainable mapping
+logic can support SOC alert investigation while
+reducing unsupported technique classifications.
+
+============================================================
+END OF DAY 19 EXPERIMENT REPORT
+============================================================
