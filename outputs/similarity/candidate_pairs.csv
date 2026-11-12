@@ -1,0 +1,4 @@
+event_1,event_2,semantic_weight,graph_weight,similarity_score,threshold,selection_status
+0,2,0.6,0.4,0.5347,0.4,Selected
+0,3,0.6,0.4,0.4522,0.4,Selected
+1,2,0.6,0.4,0.5221,0.4,Selected

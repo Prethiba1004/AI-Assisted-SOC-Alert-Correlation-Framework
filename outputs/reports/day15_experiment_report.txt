@@ -1,0 +1,96 @@
+
+DAY 15 EXPERIMENT REPORT
+========================
+
+Project:
+A Lightweight Graph-Assisted and Explainable AI Framework for SOC Alert Correlation, Clustering and MITRE ATT&CK-Enriched Meta-Alert Generation
+
+Topic:
+Similarity-Based Candidate Pair Selection
+
+Date: 12 November 2026
+
+1. OBJECTIVE
+------------
+To develop a Python-based candidate pair selection mechanism using
+hybrid semantic and graph similarity scores generated during Day 14.
+
+2. EXPERIMENTAL CONFIGURATION
+-----------------------------
+Selected configuration: B_60_40
+
+Semantic weight: 60%
+Graph weight: 40%
+Similarity threshold: 0.40
+
+Selection rule:
+Select event pairs with a hybrid similarity score greater than
+or equal to 0.40.
+
+3. INPUT DATA
+-------------
+Input file:
+outputs/similarity/weight_comparison.csv
+
+Total events: 4
+Total unique event pairs: 6
+
+4. IMPLEMENTATION
+-----------------
+Python script:
+src/candidate_pair_selector.py
+
+The script:
+- Loads Day 14 similarity results.
+- Validates required columns and missing values.
+- Selects candidate pairs using configuration B_60_40.
+- Applies the 0.40 similarity threshold.
+- Checks for duplicate pairs.
+- Saves selected results as a CSV file.
+
+5. EXPERIMENTAL RESULTS
+-----------------------
+Total event pairs evaluated: 6
+Selected candidate pairs: 3
+
+Selected pairs:
+
+Event pair 0-2: Similarity score 0.5347
+Event pair 0-3: Similarity score 0.4522
+Event pair 1-2: Similarity score 0.5221
+
+6. OUTPUT FILE
+--------------
+outputs/similarity/candidate_pairs.csv
+
+Dataset shape: 3 rows x 7 columns
+
+7. VALIDATION
+-------------
+Missing values: 0
+Duplicate pairs: 0
+Similarity scores within 0-1: True
+
+All validation checks passed.
+
+8. LIMITATIONS
+--------------
+- The experiment uses only four synthetic security events.
+- The selected weights and threshold are experimental settings.
+- Similarity does not prove that events belong to the same incident.
+- The results require evaluation using larger labelled datasets.
+- No production accuracy or detection-performance claim is made.
+
+9. CONCLUSION
+-------------
+Day 15 successfully implemented similarity-based candidate pair
+selection using the selected 60% semantic and 40% graph weighting
+configuration with a threshold of 0.40.
+
+Three candidate event pairs were selected from six possible pairs.
+The output CSV passed all validation checks.
+
+This output can be used as an input for subsequent alert
+correlation and meta-alert development.
+
+STATUS: COMPLETED
