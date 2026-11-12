@@ -1,0 +1,132 @@
+# DAY 18 EXPERIMENT REPORT
+## Alert Correlation Explainability
+
+**Project:** A Lightweight Graph-Assisted and Explainable AI Framework for SOC Alert Correlation, Clustering and MITRE ATT&CK-Enriched Meta-Alert Generation
+
+**Day:** 18  
+**Experiment:** Alert Correlation Explainability  
+**Environment:** Python 3.12.10, Windows 10, Virtual Environment
+
+### 1. Objective
+
+The objective of Day 18 was to develop an explainability component that describes why two security events are selected as potential correlated alert pairs.
+
+The framework uses semantic similarity, graph similarity, hybrid similarity scores and contextual evidence to produce understandable explanations.
+
+### 2. Methodology
+
+The experiment used four normalized synthetic security events and three candidate event pairs generated during previous project stages.
+
+The following inputs were used:
+
+- Normalized security events
+- Candidate alert pairs
+- Semantic similarity matrix
+- Graph similarity matrix
+- Hybrid similarity matrix
+
+The selected similarity weights were:
+
+- Semantic weight: 0.60
+- Graph weight: 0.40
+- Selection threshold: 0.40
+
+The hybrid score combines semantic and graph similarity.
+
+### 3. Implementation
+
+The Python script `src/alert_correlation_explainer.py` was developed and executed successfully.
+
+The script performs the following operations:
+
+1. Loads normalized events and candidate pairs.
+2. Reads semantic and graph similarity matrices.
+3. Retrieves similarity scores for each candidate pair.
+4. Calculates and validates hybrid similarity scores.
+5. Identifies contextual evidence, including hostname, username and time difference.
+6. Generates human-readable explanations.
+7. Exports explanation results into CSV and TXT files.
+
+### 4. Experimental Results
+
+A total of three candidate pairs were evaluated.
+
+| Event Pair | Semantic Similarity | Graph Similarity | Hybrid Similarity | Status |
+|---|---:|---:|---:|---|
+| 0-2 | 0.5209 | 0.5556 | 0.5347 | Selected |
+| 0-3 | 0.5314 | 0.3333 | 0.4522 | Selected |
+| 1-2 | 0.7220 | 0.2222 | 0.5221 | Selected |
+
+All three candidate pairs exceeded the selection threshold of 0.40.
+
+### 5. Correlation Evidence
+
+**Event Pair 0-2**
+- PowerShell process created.
+- Failed logon attempt detected.
+- Same hostname: WINDOWS-LAB.
+- Different usernames.
+- Time difference: 10 minutes.
+- Hybrid score: 0.5347.
+
+**Event Pair 0-3**
+- PowerShell process created.
+- Testing same username correlation.
+- Different hostnames.
+- Same username: labuser.
+- Time difference: 30 minutes.
+- Hybrid score: 0.4522.
+
+**Event Pair 1-2**
+- Failed password from 192.168.1.50.
+- Failed logon attempt detected.
+- Different hostnames.
+- Different usernames.
+- Time difference: 5 minutes.
+- Hybrid score: 0.5221.
+
+### 6. Validation
+
+The experiment completed successfully.
+
+Validation results:
+
+- Three candidate pairs processed.
+- Three pairs selected.
+- Similarity score validation: True.
+- CSV output file generated.
+- Text explanation report generated.
+- Output file existence verified.
+- Explanation content inspected.
+
+### 7. Output Files
+
+**Python implementation:**
+- `src/alert_correlation_explainer.py`
+
+**Generated outputs:**
+- `outputs/explanations/alert_correlation_explanations.csv`
+- `outputs/explanations/alert_correlation_explanations.txt`
+
+**Experiment report:**
+- `outputs/reports/day18_experiment_report.txt`
+
+### 8. Limitations
+
+- The experiment uses a small dataset containing four synthetic security events.
+- Similarity scores indicate potential relationships, not confirmed incidents.
+- Hostname, username and time differences provide contextual evidence.
+- The current implementation does not establish malicious intent.
+- Further testing with larger and realistic security datasets is required.
+
+### 9. Conclusion
+
+Day 18 successfully implemented an alert correlation explainability component.
+
+The framework generated human-readable explanations for three selected candidate pairs using semantic similarity, graph similarity, hybrid scores and contextual evidence.
+
+The score validation confirmed that the generated hybrid similarity values matched the original candidate pair results.
+
+This experiment improves the transparency and interpretability of the proposed lightweight SOC alert correlation framework.
+
+**Day 18 Status: Successfully Completed**

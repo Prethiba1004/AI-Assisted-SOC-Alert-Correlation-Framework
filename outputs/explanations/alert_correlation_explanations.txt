@@ -1,0 +1,46 @@
+DAY 18: ALERT CORRELATION EXPLAINABILITY
+=================================================================
+
+Total candidate pairs: 3
+Semantic weight: 0.6
+Graph weight: 0.4
+
+Event Pair: 0 - 2
+Description 1: PowerShell process created
+Description 2: Failed logon attempt detected
+Semantic Similarity: 0.5209
+Graph Similarity: 0.5556
+Hybrid Similarity: 0.5347
+Threshold: 0.40
+Time Difference: 10.00 minutes
+Evidence: Semantic similarity detected; Direct graph relationship detected; Same hostname; Different usernames
+Status: Selected
+Explanation: Event 0 (PowerShell process created) and Event 2 (Failed logon attempt detected) have a hybrid similarity score of 0.5347. Semantic similarity: 0.5209. Graph similarity: 0.5556. Selection threshold: 0.40. Evidence: Semantic similarity detected, Direct graph relationship detected, Same hostname, Different usernames. Time difference: 10.00 minutes. Selection result: Selected.
+-----------------------------------------------------------------
+
+Event Pair: 0 - 3
+Description 1: PowerShell process created
+Description 2: Testing same username correlation
+Semantic Similarity: 0.5314
+Graph Similarity: 0.3333
+Hybrid Similarity: 0.4522
+Threshold: 0.40
+Time Difference: 30.00 minutes
+Evidence: Semantic similarity detected; Direct graph relationship detected; Different hostnames; Same username
+Status: Selected
+Explanation: Event 0 (PowerShell process created) and Event 3 (Testing same username correlation) have a hybrid similarity score of 0.4522. Semantic similarity: 0.5314. Graph similarity: 0.3333. Selection threshold: 0.40. Evidence: Semantic similarity detected, Direct graph relationship detected, Different hostnames, Same username. Time difference: 30.00 minutes. Selection result: Selected.
+-----------------------------------------------------------------
+
+Event Pair: 1 - 2
+Description 1: Failed password from 192.168.1.50
+Description 2: Failed logon attempt detected
+Semantic Similarity: 0.7220
+Graph Similarity: 0.2222
+Hybrid Similarity: 0.5221
+Threshold: 0.40
+Time Difference: 5.00 minutes
+Evidence: Semantic similarity detected; Direct graph relationship detected; Different hostnames; Different usernames
+Status: Selected
+Explanation: Event 1 (Failed password from 192.168.1.50) and Event 2 (Failed logon attempt detected) have a hybrid similarity score of 0.5221. Semantic similarity: 0.7220. Graph similarity: 0.2222. Selection threshold: 0.40. Evidence: Semantic similarity detected, Direct graph relationship detected, Different hostnames, Different usernames. Time difference: 5.00 minutes. Selection result: Selected.
+-----------------------------------------------------------------
+
