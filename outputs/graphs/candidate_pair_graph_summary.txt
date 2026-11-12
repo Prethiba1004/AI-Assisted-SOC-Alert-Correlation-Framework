@@ -1,0 +1,20 @@
+DAY 16: CANDIDATE PAIR GRAPH SUMMARY
+====================================
+
+Total nodes: 4
+Total edges: 3
+Connected components: 1
+Graph density: 0.5000
+
+EVENT NODES:
+Event 0: {'event_type': 'Security Event'}
+Event 2: {'event_type': 'Security Event'}
+Event 3: {'event_type': 'Security Event'}
+Event 1: {'event_type': 'Security Event'}
+
+CANDIDATE EDGES:
+Event 0 - Event 2: Similarity = 0.5347
+Event 0 - Event 3: Similarity = 0.4522
+Event 2 - Event 1: Similarity = 0.5221
+
+STATUS: GRAPH CONSTRUCTION COMPLETED

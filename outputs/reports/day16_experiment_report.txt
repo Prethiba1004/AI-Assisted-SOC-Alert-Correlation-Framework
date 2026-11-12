@@ -1,0 +1,103 @@
+# Day 16 Experiment Report
+## Candidate Pair Graph Construction
+
+**Project:** A Lightweight Graph-Assisted and Explainable AI Framework for SOC Alert Correlation, Clustering and MITRE ATT&CK-Enriched Meta-Alert Generation
+
+**Date:** 12 November 2026
+
+### 1. Objective
+
+To construct an undirected, weighted graph using the candidate event pairs selected during Day 15. The graph represents relationships between security events based on their hybrid similarity scores.
+
+### 2. Input Dataset
+
+**Input file:** `outputs/similarity/candidate_pairs.csv`
+
+Selected configuration:
+- Semantic weight: 0.60 (60%)
+- Graph weight: 0.40 (40%)
+- Similarity threshold: 0.40
+
+### 3. Implementation
+
+Created the Python script:
+
+`src/candidate_graph_builder.py`
+
+Used:
+- Pandas for reading candidate-pair data.
+- NetworkX for graph construction and analysis.
+- pathlib for file and directory management.
+
+The script:
+1. Loaded the selected candidate pairs.
+2. Created an undirected graph.
+3. Added security events as graph nodes.
+4. Added weighted edges using similarity scores.
+5. Calculated graph statistics.
+6. Exported the graph in GraphML format.
+7. Generated a graph summary report.
+
+### 4. Experimental Results
+
+**Graph statistics:**
+
+| Metric | Result |
+|---|---:|
+| Total nodes | 4 |
+| Total edges | 3 |
+| Connected components | 1 |
+| Graph density | 0.5000 |
+
+**Selected candidate relationships:**
+
+| Event pair | Similarity score |
+|---|---:|
+| 0–2 | 0.5347 |
+| 0–3 | 0.4522 |
+| 1–2 | 0.5221 |
+
+All selected edges use semantic weight 0.60, graph weight 0.40 and threshold 0.40.
+
+### 5. Graph Analysis
+
+The resulting graph contains four event nodes and three weighted relationships.
+
+All four nodes belong to one connected component. This means every event can be reached from every other event through one or more graph edges.
+
+The graph density is 0.5, indicating that three of the six possible undirected event connections are present.
+
+### 6. Output Files
+
+1. `src/candidate_graph_builder.py`
+2. `outputs/graphs/candidate_pair_graph.graphml`
+3. `outputs/graphs/candidate_pair_graph_summary.txt`
+4. `outputs/reports/day16_experiment_report.txt`
+
+### 7. Validation
+
+The GraphML file was successfully reloaded using NetworkX.
+
+Validation confirmed:
+- Four event nodes.
+- Three edges.
+- Correct similarity scores.
+- Correct semantic and graph weights.
+- Correct threshold values.
+
+The generated graph summary was also inspected and matched the calculated graph statistics.
+
+### 8. Research Limitations
+
+- The current experiment uses only four synthetic security events.
+- Similarity-based graph relationships do not prove that events belong to the same real-world security incident.
+- The graph is a lightweight NetworkX-based representation, not a Graph Neural Network (GNN).
+- Larger and more diverse datasets are required for meaningful performance evaluation.
+
+### 9. Conclusion
+
+Day 16 successfully converted the selected hybrid-similarity candidate pairs into an undirected, weighted event graph.
+
+The graph preserves event relationships and similarity scores in GraphML format. This output provides a foundation for subsequent graph-based analysis, investigation and explainable SOC alert correlation.
+
+**Status: Day 16 Candidate Pair Graph Construction Completed Successfully.**
