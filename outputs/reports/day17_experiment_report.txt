@@ -1,0 +1,37 @@
+DAY 17: GRAPH-BASED CANDIDATE RELATIONSHIP ANALYSIS
+=======================================================
+
+1. GRAPH OVERVIEW
+Total nodes: 4
+Total edges: 3
+Graph density: 0.5000
+Connected components: 1
+Is graph connected: True
+
+2. NODE CENTRALITY ANALYSIS
+event_id  degree  degree_centrality  betweenness_centrality  closeness_centrality  weighted_degree
+       0       2             0.6667                  0.6667                  0.75           0.9869
+       2       2             0.6667                  0.6667                  0.75           1.0568
+       3       1             0.3333                  0.0000                  0.50           0.4522
+       1       1             0.3333                  0.0000                  0.50           0.5221
+
+3. EDGE SIMILARITY ANALYSIS
+Highest similarity: 0.5347
+Lowest similarity: 0.4522
+Average similarity: 0.5030
+
+4. MOST CONNECTED EVENTS
+0, 2
+
+5. CONNECTED COMPONENT DETAILS
+Component 1: ['0', '1', '2', '3']
+
+6. CONCLUSION
+All four events belong to one connected component.
+Events 0 and 2 have the highest node degree.
+Graph connectivity represents candidate relationships,
+not proof of a confirmed security incident.
+
+7. LIMITATIONS
+The analysis uses only four synthetic security events.
+Results require validation with larger real-world datasets.
