@@ -1,0 +1,66 @@
+DAY 20: MITRE-ENRICHED META-ALERT REPORT
+============================================================
+
+Total meta-alerts generated: 3
+Incident confirmation: None confirmed
+
+------------------------------------------------------------
+meta_alert_id: META-001
+event_1: 0
+event_2: 2
+alert_summary: PowerShell process created + Failed logon attempt detected
+description_1: PowerShell process created
+description_2: Failed logon attempt detected
+hybrid_similarity: 0.5347
+correlation_evidence: Semantic similarity detected; Direct graph relationship detected; Same hostname; Different usernames
+correlation_status: Selected
+technique_id: T1059.001
+technique_name: PowerShell
+tactic: Execution
+mapping_status: Potential event-level mapping
+mitre_evidence: PowerShell process created
+mapping_reason: PowerShell process creation is relevant to T1059.001, but process creation alone does not prove malicious execution. Pair linkage also requires analyst validation.
+mitre_url: https://attack.mitre.org/techniques/T1059/001/
+investigation_note: Validate the PowerShell command line, process ancestry, and available execution logs. Confirm whether the two events are genuinely related before treating them as one incident.
+incident_confirmation: Not confirmed
+
+------------------------------------------------------------
+meta_alert_id: META-002
+event_1: 0
+event_2: 3
+alert_summary: PowerShell process created + Testing same username correlation
+description_1: PowerShell process created
+description_2: Testing same username correlation
+hybrid_similarity: 0.4522
+correlation_evidence: Semantic similarity detected; Direct graph relationship detected; Different hostnames; Same username
+correlation_status: Selected
+technique_id: T1059.001
+technique_name: PowerShell
+tactic: Execution
+mapping_status: Potential event-level mapping
+mitre_evidence: PowerShell process created
+mapping_reason: PowerShell process creation is relevant to T1059.001, but process creation alone does not prove malicious execution. Pair linkage also requires analyst validation.
+mitre_url: https://attack.mitre.org/techniques/T1059/001/
+investigation_note: Validate the PowerShell command line, process ancestry, and available execution logs. Confirm whether the two events are genuinely related before treating them as one incident.
+incident_confirmation: Not confirmed
+
+------------------------------------------------------------
+meta_alert_id: META-003
+event_1: 1
+event_2: 2
+alert_summary: Failed password from 192.168.1.50 + Failed logon attempt detected
+description_1: Failed password from 192.168.1.50
+description_2: Failed logon attempt detected
+hybrid_similarity: 0.5221
+correlation_evidence: Semantic similarity detected; Direct graph relationship detected; Different hostnames; Different usernames
+correlation_status: Selected
+technique_id: N/A
+technique_name: No confirmed technique
+tactic: N/A
+mapping_status: Insufficient evidence
+mitre_evidence: failed password from 192.168.1.50 failed logon attempt detected
+mapping_reason: Authentication failure was observed, but the available evidence does not establish repeated or systematic password guessing. T1110 is therefore not assigned.
+mitre_url: N/A
+investigation_note: Review authentication history, source IP, affected accounts, and repeated failure patterns. Additional evidence is required before assigning a MITRE technique.
+incident_confirmation: Not confirmed
+

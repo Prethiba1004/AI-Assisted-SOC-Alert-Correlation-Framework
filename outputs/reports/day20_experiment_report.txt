@@ -1,0 +1,104 @@
+DAY 20 EXPERIMENT REPORT
+MITRE ATT&CK-ENRICHED META-ALERT GENERATION
+============================================================
+
+Project:
+A Lightweight Graph-Assisted and Explainable AI Framework
+for SOC Alert Correlation, Clustering and MITRE ATT&CK-
+Enriched Meta-Alert Generation
+
+Experiment Date: 12-November-2026
+
+1. OBJECTIVE
+------------------------------------------------------------
+The objective of Day 20 was to combine correlated security
+alerts with MITRE ATT&CK technique-mapping context and
+generate consolidated meta-alerts for SOC investigation.
+
+2. METHODOLOGY
+------------------------------------------------------------
+The experiment reused outputs from:
+
+- Day 18: Alert correlation explanations.
+- Day 19: MITRE ATT&CK technique mappings.
+
+The Python script src/meta_alert_generator.py joined the
+correlated event pairs with their corresponding MITRE
+mapping information using event_1 and event_2.
+
+Each generated meta-alert contains correlation evidence,
+similarity information, technique-mapping context and an
+investigation note.
+
+3. EXPERIMENTAL RESULTS
+------------------------------------------------------------
+Total correlation pairs processed: 3
+Meta-alerts generated: 3
+Potential event-level mappings: 2
+Insufficient-evidence mappings: 1
+Incidents marked not confirmed: 3
+
+Generated output files:
+- outputs/meta_alerts/mitre_enriched_meta_alerts.csv
+- outputs/meta_alerts/mitre_enriched_meta_alerts.txt
+
+4. MITRE ATT&CK OBSERVATIONS
+------------------------------------------------------------
+Two meta-alerts contain potential event-level mappings
+to MITRE ATT&CK technique T1059.001 (PowerShell).
+
+These mappings provide investigation context only.
+They do not establish that the correlated event pairs
+belong to one confirmed attack.
+
+One meta-alert was assigned N/A because the available
+evidence was insufficient to map a technique confidently.
+
+No incident was marked as confirmed.
+
+5. DATA QUALITY VALIDATION
+------------------------------------------------------------
+Total records: 3
+Missing values: 0
+Duplicate meta-alert IDs: 0
+Similarity scores within 0-1: True
+All incidents unconfirmed: True
+
+6. LIMITATIONS
+------------------------------------------------------------
+- The experiment uses a small dataset of four synthetic
+  security events.
+- Similarity and graph relationships do not prove that
+  events belong to the same security incident.
+- MITRE mappings are potential event-level mappings and
+  require analyst validation.
+- The current mapping approach uses available event
+  descriptions and does not establish malicious activity.
+- The experiment is a proof of concept, not a production-
+  validated SOC detection system.
+
+7. FUTURE IMPROVEMENTS
+------------------------------------------------------------
+- Test with larger and realistic security-log datasets.
+- Improve structured evidence extraction.
+- Introduce analyst feedback for mapping validation.
+- Evaluate additional correlation and enrichment methods.
+- Explore LLM-assisted investigation summaries and
+  retrieval-augmented generation in later project stages.
+
+8. CONCLUSION
+------------------------------------------------------------
+Day 20 successfully generated 3 MITRE ATT&CK-
+enriched meta-alerts by combining alert correlation
+explanations with technique-mapping context.
+
+Data-quality checks passed. The output preserves uncertainty
+and correctly keeps all incidents unconfirmed.
+
+The experiment demonstrates a lightweight, explainable
+approach to consolidating related SOC alerts for further
+analyst investigation.
+
+============================================================
+END OF DAY 20 REPORT
+============================================================
