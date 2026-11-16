@@ -1,8 +1,10 @@
-﻿{
+
+{
     "project": "SOC-AI-RAG",
-    "retrieval_method": "tfidf",
+    "retrieval_method": "hybrid",
     "similarity_metric": "cosine",
     "top_k": 3,
+    "keyword_boost": 0.15,
     "knowledge_base_path": "data/knowledge_base/mitre_attack_knowledge.json",
     "output_directory": "outputs/rag",
     "llm_provider": "gemini"

@@ -1,0 +1,209 @@
+DAY 24 EXPERIMENT REPORT
+
+Project: AI-Assisted SOC Alert Correlation Framework
+Topic: RAG Retrieval Evaluation and Optimization
+
+1. OBJECTIVE
+
+Improve the Day 23 RAG pipeline by implementing
+word-aware chunking, unique-document retrieval,
+hybrid scoring, retrieval evaluation and Gemini
+integration validation.
+
+2. IMPLEMENTED COMPONENTS
+
+- RAG test dataset with four test cases
+- Word-aware text chunking
+- Duplicate-document filtering
+- TF-IDF and keyword-based hybrid retrieval
+- Precision@K evaluation
+- Recall@K evaluation
+- Top-1 accuracy evaluation
+- Gemini integration validation
+
+3. TEST DATASET
+
+Total test cases: 4
+
+Expected MITRE ATT&CK techniques:
+
+- T1110: Brute Force
+- T1059.001: PowerShell
+- T1021.001: Remote Desktop Protocol
+- T1078: Valid Accounts
+
+Dataset:
+data/ground_truth/rag_test_dataset.json
+
+4. TEXT CHUNKING IMPROVEMENT
+
+Previous approach: Character-based chunking.
+
+Improved approach: Word-aware chunking.
+
+Chunk size: Approximately 300 characters
+Chunk overlap: Approximately 50 characters
+
+The updated method moves chunk boundaries
+to whitespace to avoid splitting words.
+
+Total knowledge documents: 5
+Total chunks generated: 10
+
+5. RETRIEVAL OPTIMIZATION
+
+Duplicate-document filtering was implemented.
+Only the highest-scoring chunk from each
+knowledge document is retained.
+
+Hybrid retrieval combines:
+
+- TF-IDF cosine similarity
+- Keyword matching against technique names,
+  descriptions and detection clues
+
+Configured keyword boost: 0.15
+
+Hybrid scoring formula:
+
+Final Score =
+(0.85 * TF-IDF Score) +
+(0.15 * Keyword Score)
+
+Analyst Guidance is excluded from keyword
+matching to reduce irrelevant matches.
+
+6. RETRIEVAL EVALUATION
+
+Baseline TF-IDF Top-1 Accuracy: 75%
+
+Optimized Hybrid Top-1 Accuracy: 100%
+
+Baseline Precision@1: 0.75
+Hybrid Precision@1: 1.00
+
+Baseline Recall@1: 0.75
+Hybrid Recall@1: 1.00
+
+Baseline Precision@3: 0.3333
+Hybrid Precision@3: 0.3333
+
+Baseline Recall@3: 1.00
+Hybrid Recall@3: 1.00
+
+Hybrid Precision@5: 0.2000
+Hybrid Recall@5: 1.00
+
+All four test cases ranked the expected
+MITRE technique first after optimization.
+
+Evaluation output:
+outputs/reports/day24_retrieval_evaluation.csv
+
+7. INDIVIDUAL TEST RESULTS
+
+RAG-TEST-001:
+Expected: T1110
+Predicted: T1110
+Rank: 1
+
+RAG-TEST-002:
+Expected: T1059.001
+Predicted: T1059.001
+Rank: 1
+
+RAG-TEST-003:
+Expected: T1021.001
+Predicted: T1021.001
+Rank: 1
+
+RAG-TEST-004:
+Expected: T1078
+Predicted: T1078
+Rank: 1
+
+8. GEMINI + RAG INTEGRATION
+
+The existing Gemini client and RAG analyzer
+were tested successfully.
+
+The hybrid retriever supplied the top three
+knowledge results to Gemini.
+
+For the sample failed-login alert:
+
+- T1110 Brute Force was ranked first.
+- T1078 Valid Accounts was retrieved as
+  additional context.
+- Gemini generated a structured SOC analysis.
+
+Generated sections:
+
+- Alert Summary
+- Relevant MITRE ATT&CK Technique
+- Evidence Supporting the Mapping
+- Recommended Investigation Steps
+- Limitations and Uncertainties
+
+The analysis distinguished retrieved knowledge
+from observed alert evidence and recommended
+human analyst verification.
+
+9. OBSERVATIONS
+
+Hybrid retrieval improved Top-1 accuracy from
+75% to 100% on the four-case test dataset.
+
+Keyword matching helped correct the ranking
+of the Valid Accounts test case.
+
+Unique-document filtering prevented multiple
+chunks from the same technique from occupying
+the retrieval results.
+
+Gemini successfully used the retrieved context
+to explain the sample SOC alert.
+
+10. LIMITATIONS
+
+- Only four curated evaluation test cases.
+- Knowledge base contains five MITRE techniques.
+- Results do not establish real-world accuracy.
+- Keyword matching is dependent on the curated
+  knowledge base and token normalization.
+- Word-aware chunking does not guarantee
+  semantic chunk boundaries.
+- Precision and recall depend on the defined
+  single-expected-technique test labels.
+- Gemini output requires human verification.
+- No production or real-time SOC deployment tested.
+
+11. CONCLUSION
+
+Day 24 improved the RAG pipeline through
+word-aware chunking, unique-document filtering
+and hybrid TF-IDF plus keyword retrieval.
+
+The evaluation achieved 100% Top-1 accuracy
+on the four curated test cases, compared with
+75% using the baseline TF-IDF retriever.
+
+Gemini integration was also validated using
+the hybrid retrieval results.
+
+These findings demonstrate improvement on
+the current experimental dataset. Broader
+testing is required before drawing conclusions
+about real-world SOC performance.
+
+12. COMPLETION STATUS
+
+Day 24 objectives: 7/7 completed
+
+Word-aware chunking: Successful
+Unique-document retrieval: Successful
+Hybrid retrieval: Successful
+Retrieval evaluation: Successful
+Top-1 accuracy: 100% on test dataset
+Gemini + RAG integration: Successful
+Experiment report: Generated

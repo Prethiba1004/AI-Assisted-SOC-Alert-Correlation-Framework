@@ -1,0 +1,5 @@
+test_id,expected_technique_id,expected_technique_name,top1_predicted_technique_id,expected_rank,retrieved_technique_ids,top1_correct,precision_at_1,recall_at_1,precision_at_3,recall_at_3,precision_at_5,recall_at_5
+RAG-TEST-001,T1110,Brute Force,T1110,1,T1110;T1078;T1021.001;T1059.001;T1059,True,1.0,1.0,0.3333333333333333,1.0,0.2,1.0
+RAG-TEST-002,T1059.001,PowerShell,T1059.001,1,T1059.001;T1059;T1078;T1021.001,True,1.0,1.0,0.3333333333333333,1.0,0.2,1.0
+RAG-TEST-003,T1021.001,Remote Desktop Protocol,T1021.001,1,T1021.001;T1110,True,1.0,1.0,0.3333333333333333,1.0,0.2,1.0
+RAG-TEST-004,T1078,Valid Accounts,T1078,1,T1078;T1059.001;T1110;T1021.001;T1059,True,1.0,1.0,0.3333333333333333,1.0,0.2,1.0

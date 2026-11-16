@@ -1,0 +1,26 @@
+[
+    {
+        "test_id": "RAG-TEST-001",
+        "alert": "Multiple failed login attempts detected from a suspicious IP address.",
+        "expected_technique_id": "T1110",
+        "expected_technique_name": "Brute Force"
+    },
+    {
+        "test_id": "RAG-TEST-002",
+        "alert": "Suspicious PowerShell execution detected with encoded commands.",
+        "expected_technique_id": "T1059.001",
+        "expected_technique_name": "PowerShell"
+    },
+    {
+        "test_id": "RAG-TEST-003",
+        "alert": "Unauthorized Remote Desktop Protocol connection detected from an external IP address.",
+        "expected_technique_id": "T1021.001",
+        "expected_technique_name": "Remote Desktop Protocol"
+    },
+    {
+        "test_id": "RAG-TEST-004",
+        "alert": "A valid user account was used from an unusual location and at an unusual time.",
+        "expected_technique_id": "T1078",
+        "expected_technique_name": "Valid Accounts"
+    }
+]
