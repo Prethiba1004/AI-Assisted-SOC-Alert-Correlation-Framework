@@ -1,0 +1,80 @@
+DAY 21 EXPERIMENT REPORT
+AI-ASSISTED META-ALERT SUMMARIZATION
+=======================================================
+
+Project:
+A Lightweight Graph-Assisted and Explainable AI Framework
+for SOC Alert Correlation, Clustering and MITRE ATT&CK-
+Enriched Meta-Alert Generation.
+
+Date: 16-November-2026
+
+1. OBJECTIVE
+-------------------------------------------------------
+Generate readable, evidence-grounded SOC investigation
+summaries from MITRE-enriched meta-alert records.
+
+2. METHODOLOGY
+-------------------------------------------------------
+- Read Day 20 MITRE-enriched meta-alert CSV.
+- Extract event descriptions and correlation evidence.
+- Preserve hybrid similarity scores.
+- Include MITRE ATT&CK mapping information.
+- Include mapping limitations and investigation notes.
+- Generate structured investigation summaries.
+- Export summaries into CSV and TXT formats.
+
+3. EXPERIMENT RESULTS
+-------------------------------------------------------
+Total meta-alerts processed: 3
+Potential event-level mappings: 2
+Insufficient-evidence mappings: 1
+Incidents marked Not confirmed: 3
+Non-empty investigation summaries: 3
+
+4. VALIDATION
+-------------------------------------------------------
+All summaries were checked for:
+- Meta-alert identification.
+- Event descriptions.
+- Correlation evidence.
+- MITRE mapping status.
+- Incident confirmation status.
+- Investigation recommendations.
+
+5. OUTPUT FILES
+-------------------------------------------------------
+Python module:
+src/meta_alert_summarizer.py
+
+CSV output:
+outputs/summaries/meta_alert_summaries.csv
+
+Text output:
+outputs/summaries/meta_alert_summaries.txt
+
+Experiment report:
+outputs/reports/day21_experiment_report.txt
+
+6. LIMITATIONS
+-------------------------------------------------------
+- The dataset contains only four synthetic source events
+  and three generated meta-alerts.
+- The current implementation uses Python-based structured
+  summarization and templates, not a connected LLM.
+- Summaries depend on the accuracy of input meta-alerts.
+- Similarity and MITRE mapping do not prove an attack.
+- Analyst validation remains necessary.
+
+7. CONCLUSION
+-------------------------------------------------------
+The Day 21 prototype successfully generated structured
+investigation summaries for the available meta-alerts.
+Mapping uncertainty and unconfirmed incident status were
+preserved throughout the summarization process.
+
+This is a proof-of-concept implementation and is not
+validated for production SOC deployment.
+
+=======================================================
+END OF DAY 21 REPORT
