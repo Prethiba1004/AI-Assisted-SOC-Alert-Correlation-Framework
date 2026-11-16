@@ -1,0 +1,37 @@
+[
+    {
+        "technique_id": "T1059.001",
+        "technique_name": "PowerShell",
+        "description": "Adversaries may abuse PowerShell commands and scripts to execute code on Windows systems.",
+        "detection_clues": "Unusual PowerShell execution, encoded commands, suspicious command-line arguments, and unexpected script activity.",
+        "analyst_guidance": "Review Sysmon Event ID 1, process command-line arguments, parent process, user account, and execution time."
+    },
+    {
+        "technique_id": "T1110",
+        "technique_name": "Brute Force",
+        "description": "Adversaries may repeatedly attempt authentication to guess valid account credentials.",
+        "detection_clues": "Repeated failed logins, multiple authentication attempts, unusual login patterns, and attempts against multiple accounts.",
+        "analyst_guidance": "Review authentication logs, source IP addresses, targeted accounts, failure frequency, and successful logins following failures."
+    },
+    {
+        "technique_id": "T1078",
+        "technique_name": "Valid Accounts",
+        "description": "Adversaries may use legitimate account credentials to gain access and maintain access to systems.",
+        "detection_clues": "Unusual login locations, unexpected login times, abnormal account activity, and suspicious use of privileged accounts.",
+        "analyst_guidance": "Verify account ownership, login history, source addresses, privilege level, and whether the activity matches normal user behavior."
+    },
+    {
+        "technique_id": "T1059",
+        "technique_name": "Command and Scripting Interpreter",
+        "description": "Adversaries may abuse command and scripting interpreters to execute commands and scripts.",
+        "detection_clues": "Unexpected command interpreter execution, suspicious scripts, unusual process chains, and abnormal command-line activity.",
+        "analyst_guidance": "Inspect process creation logs, command-line arguments, parent-child process relationships, and execution context."
+    },
+    {
+        "technique_id": "T1021.001",
+        "technique_name": "Remote Desktop Protocol",
+        "description": "Adversaries may use Remote Desktop Protocol to access and control remote systems.",
+        "detection_clues": "Unexpected RDP connections, unusual remote logins, suspicious source addresses, and abnormal remote session activity.",
+        "analyst_guidance": "Review Windows authentication events, RDP logon events, source IP addresses, account activity, and session timing."
+    }
+]
