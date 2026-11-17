@@ -1,0 +1,4 @@
+meta_alert_id,original_ips,incident_status_preserved,technique_id_preserved,mapping_status_preserved,original_ip_traceable,evidence_analysis_available,passed_checks,total_checks,result
+META-001,N/A,True,True,True,True,True,5,5,PASS
+META-002,N/A,True,True,True,True,True,5,5,PASS
+META-003,192.168.1.50,True,True,True,True,True,5,5,PASS
