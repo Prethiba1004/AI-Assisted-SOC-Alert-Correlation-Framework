@@ -1,0 +1,85 @@
+﻿DAY 28 - AI INVESTIGATION QUALITY EVALUATION
+============================================
+
+Project: AI-Assisted SOC Alert Correlation Framework
+Date: 18 November 2026
+
+1. OBJECTIVE
+Evaluate the quality of RAG-assisted AI investigation outputs using
+ground-truth findings and predefined quality criteria.
+
+2. EVALUATION CRITERIA
+Five criteria were evaluated, each scored from 0 to 2:
+- Evidence accuracy
+- Technical correctness
+- MITRE ATT&CK relevance
+- Investigation usefulness
+- Clarity
+
+Maximum score per investigation: 10.
+
+3. EVALUATION RESULTS
+
+META-001: 9/10 (90%)
+META-002: 10/10 (100%)
+META-003: 9/10 (90%)
+
+Average score: 9.33/10
+Average percentage: 93.33%
+
+4. EVIDENCE REVIEW FINDINGS
+
+META-001:
+The AI used plural wording for failed-logon attempts, although
+the source contained only one failed-logon event.
+
+META-002:
+No predefined evidence-attribution issue was detected.
+
+META-003:
+The source IP 192.168.1.50 belongs to Event 1. The AI incorrectly
+attributed this IP to both authentication events. Event 2 did not
+contain this source IP in the original normalized evidence.
+
+5. MITRE ATT&CK AND TECHNICAL REVIEW
+All three investigations preserved the original incident status
+and MITRE mapping uncertainty.
+
+Potential mappings remained potential. Retrieved MITRE techniques
+were treated as candidates rather than confirmed mappings.
+No incident was incorrectly promoted to confirmed status during
+the reviewed assessments.
+
+6. VALIDATION AND HUMAN REVIEW
+All three investigations were evaluated.
+All five scoring criteria were recorded for each investigation.
+Human review is required for all investigations.
+
+7. LIMITATIONS
+- Evaluation used only three curated meta-alert cases.
+- The evaluator uses predefined, rule-based checks.
+- Some criteria use keyword-based scoring.
+- The score does not establish real-world AI accuracy or
+  generalization to unseen security incidents.
+- Automated checks cannot verify every AI-generated statement.
+- Human analyst review remains essential.
+
+8. CONCLUSION
+The Day 28 evaluation produced a preliminary average score of
+93.33% across three curated investigations.
+
+The review identified two evidence-quality issues:
+incorrect plural wording in META-001 and incorrect source-IP
+attribution in META-003.
+
+The evaluator's MITRE preservation condition was corrected.
+The revised evaluation successfully awarded META-001 a
+technical correctness score of 2/2.
+
+This evaluation improves visibility into AI investigation
+quality while reinforcing evidence grounding, MITRE mapping
+uncertainty, and human analyst oversight.
+
+OUTPUT:
+outputs/reports/day28_ai_quality_evaluation.csv
+outputs/reports/day28_ai_quality_evaluation.txt

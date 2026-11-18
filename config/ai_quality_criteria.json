@@ -1,0 +1,37 @@
+﻿{
+  "project": "AI-Assisted SOC Alert Correlation Framework",
+  "evaluation_method": "Ground-truth-based manual review",
+  "maximum_score": 10,
+  "scoring_scale": {
+    "0": "Incorrect, missing, or unsupported",
+    "1": "Partially correct",
+    "2": "Correct and supported by evidence"
+  },
+  "criteria": [
+    {
+      "name": "evidence_accuracy",
+      "weight": 2,
+      "description": "Checks whether AI correctly explains original security evidence."
+    },
+    {
+      "name": "technical_correctness",
+      "weight": 2,
+      "description": "Checks whether the security explanation is technically correct."
+    },
+    {
+      "name": "mitre_relevance",
+      "weight": 2,
+      "description": "Checks whether MITRE ATT&CK techniques are relevant and not incorrectly confirmed."
+    },
+    {
+      "name": "investigation_usefulness",
+      "weight": 2,
+      "description": "Checks whether suggested investigation steps are practical and useful."
+    },
+    {
+      "name": "clarity",
+      "weight": 2,
+      "description": "Checks whether the AI explanation is clear and understandable."
+    }
+  ]
+}

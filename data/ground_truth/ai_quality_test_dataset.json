@@ -1,0 +1,62 @@
+{
+  "dataset_name": "Day 28 AI Investigation Quality Ground Truth",
+  "purpose": "Expected findings for evaluating AI-generated SOC investigations",
+  "evaluation_cases": [
+    {
+      "meta_alert_id": "META-001",
+      "expected_findings": {
+        "event_1": "PowerShell process created",
+        "event_2": "Failed logon attempt detected",
+        "correlation": "Same hostname and different usernames",
+        "mitre_technique": "T1059.001",
+        "mitre_status": "Potential event-level mapping",
+        "incident_status": "Not confirmed",
+        "source_ip": "Not available in the original meta-alert record"
+      },
+      "unsupported_conclusions": [
+        "Claiming that an attack is confirmed",
+        "Claiming that the failed logon was caused by PowerShell",
+        "Treating a potential MITRE mapping as confirmed",
+        "Claiming multiple failed logon attempts when only one failed-logon event is present"
+      ]
+    },
+    {
+      "meta_alert_id": "META-002",
+      "expected_findings": {
+        "event_1": "PowerShell process created",
+        "event_2": "Testing same username correlation",
+        "correlation": "Different hostnames and same username",
+        "mitre_technique": "T1059.001",
+        "mitre_status": "Potential event-level mapping",
+        "incident_status": "Not confirmed",
+        "source_ip": "Not available in the original meta-alert record"
+      },
+      "unsupported_conclusions": [
+        "Claiming that the same username proves an attacker moved between systems",
+        "Claiming that the activity is malicious without supporting evidence",
+        "Treating a potential MITRE mapping as confirmed"
+      ]
+    },
+    {
+      "meta_alert_id": "META-003",
+      "expected_findings": {
+        "event_1": "Failed password from 192.168.1.50",
+        "event_2": "Failed logon attempt detected",
+        "correlation": "Different hostnames and different usernames",
+        "mitre_technique": "N/A",
+        "mitre_status": "Insufficient evidence",
+        "incident_status": "Not confirmed",
+        "source_ip": "192.168.1.50",
+        "source_ip_event_1": "192.168.1.50",
+        "source_ip_event_2": "Not available in source evidence",
+        "ip_attribution_rule": "The IP belongs only to Event 1 and must not be attributed to Event 2"
+      },
+      "unsupported_conclusions": [
+        "Claiming that a brute-force attack is confirmed",
+        "Claiming that the source IP is malicious without supporting evidence",
+        "Assigning a confirmed MITRE technique without evidence",
+        "Attributing source IP 192.168.1.50 to Event 2 without supporting evidence"
+      ]
+    }
+  ]
+}
