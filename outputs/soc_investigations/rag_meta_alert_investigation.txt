@@ -29,25 +29,22 @@ Detection Clues: Repeated failed logins, multiple authentication attempts, unusu
 Analyst Guidance:
 
 Ai Explanation:
-The meta-alert correlates two separate events observed on the same hostname involving different usernames: the creation of a PowerShell process (mapped to technique T1059.001 under the Execution tactic) and a failed logon attempt. The correlation evidence indicates semantic similarity, a direct graph relationship, sharing the same hostname, but involving different usernames.
+This meta-alert correlates two distinct events on the same host 'WINDOWS-LAB' involving different usernames ('labuser' and 'administrator'). Event 1 (Windows Sysmon, Event ID 1) shows a PowerShell process creation at 2026-11-04 10:30:00 by 'labuser'. Event 2 (Elastic Security, Event ID 4625) shows a failed logon attempt at 2026-11-04T10:40:00Z by 'administrator'. The correlation evidence notes semantic similarity, a direct graph relationship, the same hostname, and different usernames.
 
 Evidence Analysis:
-Original observed evidence consists of a PowerShell process creation event and a failed logon attempt occurring on the same hostname with different usernames. The hybrid similarity score is 0.5347. The mapping reason explicitly states that process creation alone does not prove malicious execution and that pair linkage requires analyst validation. The incident confirmation status remains 'Not confirmed'.
+Event 1 (source: Windows Sysmon, event_id: 1, timestamp: 2026-11-04 10:30:00, hostname: WINDOWS-LAB, username: labuser) records the creation of a PowerShell process; the source IP is Not available in source evidence. Event 2 (source: Elastic Security, event_id: 4625, timestamp: 2026-11-04T10:40:00Z, hostname: WINDOWS-LAB, username: administrator) records a failed logon attempt; the source IP is Not available in source evidence. The events involve different usernames and are separated by a 10-minute time gap.
 
 Mitre Analysis:
-The original meta-alert maps the PowerShell event to Technique ID T1059.001 (PowerShell) under the Execution tactic, with a mapping status of 'Potential event-level mapping'. Retrieved MITRE knowledge provides context for T1059.001 (PowerShell abuse for code execution) and candidate technique T1110 (Brute Force via repeated authentication attempts). Per the rules, retrieved techniques are candidates for analyst review and do not constitute confirmed mappings.
+Retrieved MITRE knowledge provides candidate techniques T1059.001 (PowerShell) and T1110 (Brute Force). The original meta-alert maps the PowerShell activity to T1059.001 under the Execution tactic. However, the mapping status is 'Potential event-level mapping' with an 'Unconfirmed' incident confirmation. The original evidence notes that process creation alone does not prove malicious execution and pair linkage requires analyst validation.
 
 Investigation Steps:
-1. Inspect process creation logs and command-line arguments for the PowerShell process to check for encoded commands or suspicious execution parameters.
-2. Review parent-child process relationships and the execution context of the PowerShell process.
-3. Analyze authentication logs on the target hostname to investigate the failed logon attempts, noting that different usernames were involved.
-4. Determine if there is any causal relationship between the failed logons and the PowerShell execution on the shared hostname.
+1. Inspect process creation logs, command-line arguments, parent-child process relationships, and execution context for Event 1. 2. Review authentication logs around 2026-11-04T10:40:00Z on hostname WINDOWS-LAB to analyze the context of the failed logon attempt for the 'administrator' account. 3. Verify whether the PowerShell execution by 'labuser' is related to the failed logon attempt by 'administrator'.
 
 Limitations:
-The provided data is insufficient to confirm a malicious incident. Correlation similarity and graph relationships do not prove a common attack, different usernames must not be treated as the same identity, and process creation alone does not confirm malicious execution. The incident remains unconfirmed.
+Source IP addresses are not available in the source evidence for either event. Retrieval similarity scores and candidate MITRE techniques are relevance indicators and do not constitute proof of malicious activity or a confirmed attack. The correlation status is unconfirmed and requires further analyst validation.
 
 Ai Incident Assessment:
-The incident is unconfirmed. The meta-alert highlights a potential correlation between a PowerShell process creation and failed logon attempts on the same host, but current evidence is insufficient to establish malicious intent or link the different usernames to a verified attack campaign.
+The incident confirmation remains Not confirmed. The correlation indicates semantic and graph relationships between a PowerShell process creation and a failed logon attempt on the same host, but involve different usernames and insufficient evidence to confirm a coordinated attack.
 
 -----------------------------------------------------------------
 
@@ -72,22 +69,22 @@ unusual process chains, and abnormal command-line activity.
 Analyst Guidance: Inspect process creation logs, command-line arguments, parent-child process relationships, and execution context.
 
 Ai Explanation:
-This meta-alert (META-002) identifies a PowerShell process creation event correlated with a test scenario involving the same username across different hostnames, indicated by a hybrid similarity of 0.4522. The correlation status is 'Selected', but the incident confirmation remains 'Not confirmed'.
+Meta-alert META-002 correlates two events across different hosts (WINDOWS-LAB and LINUX-TEST) sharing the same username 'labuser' with a hybrid similarity of 0.4522. Event 1 (event_1) from Windows Sysmon records a PowerShell process creation ('PowerShell process created'), while Event 2 (event_2) from Correlation Test represents a testing correlation event ('Testing same username correlation').
 
 Evidence Analysis:
-Original evidence shows a PowerShell process was created and correlated via semantic similarity and direct graph relationships involving the same username across different hostnames. The mapping status is a 'Potential event-level mapping', and the mapping reason notes that process creation alone does not prove malicious execution, requiring analyst validation.
+The evidence consists of two events: event_1 (source: Windows Sysmon, hostname: WINDOWS-LAB, username: labuser, timestamp: 2026-11-04 10:30:00, event_id: '1', description: 'PowerShell process created', source_ip: Not available in source evidence) and event_2 (source: Correlation Test, hostname: LINUX-TEST, username: labuser, timestamp: 2026-11-04 11:00:00, event_id: 'TEST-USER-01', description: 'Testing same username correlation', source_ip: Not available in source evidence). The correlation evidence notes semantic similarity, a direct graph relationship, different hostnames, and the same username.
 
 Mitre Analysis:
-Retrieved MITRE knowledge references Technique T1059.001 (PowerShell), describing how adversaries may abuse PowerShell commands and scripts on Windows systems, with detection clues such as encoded commands and suspicious arguments. Analyst guidance suggests inspecting process creation logs, command-line arguments, parent-child relationships, and execution context. However, the original technique mapping status is only a potential mapping and is unconfirmed.
+The meta-alert references Technique ID T1059.001 (PowerShell) under the Execution tactic with a mapping status of 'Potential event-level mapping'. Retrieved MITRE knowledge indicates that adversaries may abuse PowerShell commands and scripts to execute code on Windows systems, and suggests inspecting process creation logs and command-line arguments. However, process creation alone does not prove malicious execution, and the mapping remains unconfirmed.
 
 Investigation Steps:
-1. Inspect process creation logs and execution context on the involved hostnames. 2. Review parent-child process relationships and command-line arguments for anomalous or encoded PowerShell activity. 3. Verify user activity across the different hostnames to determine if the same username correlation indicates legitimate administrative tasks or suspicious lateral movement.
+1. Inspect process creation logs and command-line arguments for event_1 on hostname WINDOWS-LAB. 2. Verify parent-child process relationships associated with the PowerShell execution on WINDOWS-LAB. 3. Review the context and purpose of the correlation test event on hostname LINUX-TEST (event_2). 4. Validate whether the shared username 'labuser' across different hosts indicates lateral movement or coincidental activity.
 
 Limitations:
-The evidence is insufficient to confirm a malicious incident. Process creation alone does not prove malicious execution, and the similarity metrics and username correlation only represent potential links requiring further analyst review.
+Source IPs are not available in the source evidence for either event. The correlation status is unconfirmed, the incident confirmation is not confirmed, and the mapping status is only a potential event-level mapping with a similarity score of 0.4522 acting as a relevance indicator rather than proof.
 
 Ai Incident Assessment:
-The incident is unconfirmed. The current evidence indicates potential PowerShell execution and user correlation across hosts, but lacks proof of malicious intent or a confirmed attack.
+The incident confirmation status is 'Not confirmed'. The current evidence shows a PowerShell process creation on a Windows host and a test correlation event on a Linux host sharing a username, but this does not confirm a malicious incident or coordinated attack.
 
 -----------------------------------------------------------------
 
@@ -119,22 +116,22 @@ Detection Clues: Unusual login locations, unexpected login times, abnormal accou
 Analyst
 
 Ai Explanation:
-Meta-alert META-003 groups two authentication-related events involving source IP 192.168.1.50: a 'Failed password' event and a 'Failed logon attempt detected' event. Correlation evidence indicates semantic similarity and a direct graph relationship, though the events involve different hostnames and different usernames.
+Meta-alert META-003 correlates two distinct authentication failure events observed across different hosts and usernames. Event 1 (supported by event_reference event_1) originates from hostname KALI-LAB with username kaliuser, detailing a failed password from IP address 192.168.1.50 at 2026-11-04 10:35:00. Event 2 (supported by event_reference event_2) originates from hostname WINDOWS-LAB with username administrator, detailing a failed logon attempt detected at 2026-11-04T10:40:00Z, with its source IP listed as Not available in source evidence. The correlation evidence indicates semantic similarity and a direct graph relationship, despite involving different hostnames and different usernames.
 
 Evidence Analysis:
-The original observed evidence consists of failed password and failed logon attempts originating from source IP 192.168.1.50. The correlation evidence notes that the events involve different hostnames and different usernames. The mapping reason explicitly states that while authentication failures were observed, the available evidence does not establish repeated or systematic password guessing.
+The meta-alert aggregates two discrete security events. Event 1 (event_index 1) from source Kali Linux, hostname KALI-LAB, username kaliuser, and event_id sshd records 'Failed password from 192.168.1.50' where the source IP is 192.168.1.50. Event 2 (event_index 2) from source Elastic Security, hostname WINDOWS-LAB, username administrator, and event_id 4625 records 'Failed logon attempt detected' where the source IP is Not available in source evidence. The correlation attributes note different hostnames and different usernames, indicating these are separate entities and login attempts rather than a single unified attack sequence.
 
 Mitre Analysis:
-The original mapping status is 'Insufficient evidence' with technique ID 'N/A' and technique name 'No confirmed technique'. Retrieved MITRE knowledge suggests Technique T1110 (Brute Force) involving repeated failed logins and multiple authentication attempts as a potential candidate for review based on authentication failure themes, but this retrieved technique is not a confirmed mapping due to insufficient evidence of repeated guessing.
+The original meta-alert mapping status is 'Insufficient evidence' with technique_id 'N/A' and mapping_reason stating that an authentication failure was observed, but the available evidence does not establish repeated or systematic password guessing, so T1110 is not assigned. Retrieved MITRE knowledge suggests Technique ID: T1110 (Brute Force) and T1078 (Valid Accounts) as context based on similarity scores (e.g., TFIDF 0.262, similarity score 0.2377 for document 2 chunk 1). However, retrieval similarity scores are relevance indicators, not proof. The retrieved technique is presented merely as a candidate for analyst review, and the original unconfirmed MITRE mapping status is strictly preserved without upgrading.
 
 Investigation Steps:
-Review authentication logs for source IP 192.168.1.50 to determine the exact frequency, timing, and target accounts of the failed logon attempts. Check Windows authentication events and source IP activity to see if other systems are being targeted or if this represents isolated user error.
+1. Review authentication logs on KALI-LAB (event_reference event_1) to check for additional failed password attempts or successful logins associated with the source IP 192.168.1.50 and username kaliuser. 2. Review Windows authentication events, specifically Event ID 4625 on WINDOWS-LAB (event_reference event_2), to investigate the context of the failed logon attempt for the administrator account where the source IP is Not available in source evidence. 3. Verify if there is any network traffic connection between 192.168.1.50 and WINDOWS-LAB to determine if the events are related despite the differing hostnames and usernames. 4. Consult analyst guidance associated with Windows authentication events and source IP tracking.
 
 Limitations:
-The evidence lacks details regarding the frequency, volume, and exact timestamps of the authentication failures. Additionally, the involvement of different hostnames and different usernames restricts the ability to conclusively link these events to a single coordinated attack without further log context.
+The available evidence is limited to two isolated authentication failure events involving different hostnames (KALI-LAB and WINDOWS-LAB) and different usernames (kaliuser and administrator). The source IP 192.168.1.50 is only present in event_reference event_1 and is Not available in source evidence for event_reference event_2. The correlation status notes semantic and graph links, but different usernames must not be treated as the same identity, and correlation does not prove a common attack or establish repeated password guessing.
 
 Ai Incident Assessment:
-Not confirmed. The incident status remains unconfirmed as the current evidence is insufficient to establish a systematic attack pattern such as brute forcing, and different usernames and hostnames are involved.
+The incident confirmation status is 'Not confirmed'. The available evidence shows two distinct authentication failures across different systems and accounts, but lacks the repeated or systematic attempts required to confirm a coordinated attack or brute-force campaign. Therefore, the unconfirmed incident status and insufficient mapping status are maintained.
 
 -----------------------------------------------------------------
 

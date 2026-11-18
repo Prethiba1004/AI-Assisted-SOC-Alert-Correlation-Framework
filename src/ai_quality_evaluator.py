@@ -12,7 +12,7 @@ CRITERIA_FILE = ROOT / "config/ai_quality_criteria.json"
 OUTPUT_DIR = ROOT / "outputs/reports"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-OUTPUT_FILE = OUTPUT_DIR / "day28_ai_quality_evaluation.csv"
+OUTPUT_FILE = OUTPUT_DIR / "day29_ai_quality_evaluation.csv"
 
 
 def evaluate_case(row, ground_truth):
@@ -75,9 +75,18 @@ def evaluate_case(row, ground_truth):
             and ("unconfirmed" in mitre or "do not constitute confirmed" in mitre or "not a confirmed mapping" in mitre)
         )
     elif findings["mitre_status"] == "Insufficient evidence":
+        uncertainty_phrases = (
+            "not a confirmed mapping",
+            "not assigned",
+            "without upgrading",
+            "insufficient evidence",
+            "does not establish",
+            "not established",
+            "unconfirmed"
+        )
         mapping_preserved = (
             "insufficient evidence" in mitre
-            and "not a confirmed mapping" in mitre
+            and any(phrase in mitre for phrase in uncertainty_phrases)
         )
     else:
         mapping_preserved = True
@@ -98,7 +107,12 @@ def evaluate_case(row, ground_truth):
         mitre_relevant = (
             "t1110" in mitre
             and "candidate" in mitre
-            and "not a confirmed mapping" in mitre
+            and any(phrase in mitre for phrase in (
+                "not a confirmed mapping",
+                "not assigned",
+                "without upgrading",
+                "unconfirmed"
+            ))
         )
     else:
         mitre_relevant = (
@@ -201,7 +215,7 @@ def main():
     output.to_csv(OUTPUT_FILE, index=False, encoding="utf-8-sig")
 
     print("=" * 60)
-    print("DAY 28 - AI INVESTIGATION QUALITY EVALUATION")
+    print("DAY 29 - AI INVESTIGATION QUALITY EVALUATION")
     print("=" * 60)
     print(output[
         ["meta_alert_id", "total_score", "maximum_score", "percentage"]

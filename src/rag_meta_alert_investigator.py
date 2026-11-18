@@ -1,4 +1,4 @@
-﻿import json
+import json
 import re
 from pathlib import Path
 
@@ -9,6 +9,7 @@ from llm_client import generate_llm_response
 
 
 INPUT_FILE = Path("outputs/meta_alerts/mitre_enriched_meta_alerts.csv")
+NORMALIZED_EVENTS_FILE = Path("data/normalized/normalized_events.csv")
 OUTPUT_DIR = Path("outputs/soc_investigations")
 
 CSV_OUTPUT = OUTPUT_DIR / "rag_meta_alert_investigation.csv"
@@ -47,7 +48,60 @@ def build_retrieval_query(alert):
     return " ".join(values)
 
 
-def build_investigation_prompt(alert, retrieved_chunks):
+
+def get_event_level_evidence(alert, events_df):
+    """Retrieve original evidence for each referenced event."""
+
+    event_records = []
+
+    for event_number in ["event_1", "event_2"]:
+        event_reference = str(alert.get(event_number, "")).strip()
+
+        if not event_reference:
+            continue
+
+        try:
+            event_index = int(event_reference)
+        except ValueError:
+            raise ValueError(
+                f"Invalid event reference in {event_number}: {event_reference}"
+            )
+
+        if event_index < 0 or event_index >= len(events_df):
+            raise ValueError(
+                f"Event reference out of range: {event_number}={event_index}"
+            )
+
+        event = events_df.iloc[event_index]
+        description = str(event.get("description", ""))
+
+        ip_matches = re.findall(
+            r"\b(?:\d{1,3}\.){3}\d{1,3}\b",
+            description
+        )
+
+        source_ip = (
+            ", ".join(dict.fromkeys(ip_matches))
+            if ip_matches
+            else "Not available in source evidence"
+        )
+
+        event_records.append({
+            "event_reference": event_number,
+            "event_index": event_index,
+            "timestamp": str(event.get("timestamp", "Not available in source evidence")),
+            "source": str(event.get("source", "Not available in source evidence")),
+            "hostname": str(event.get("hostname", "Not available in source evidence")),
+            "username": str(event.get("username", "Not available in source evidence")),
+            "event_id": str(event.get("event_id", "Not available in source evidence")),
+            "description": description,
+            "source_ip": source_ip
+        })
+
+    return event_records
+
+
+def build_investigation_prompt(alert, retrieved_chunks, events_df):
     """Build an evidence-based RAG investigation prompt."""
 
     original_evidence = {
@@ -69,6 +123,8 @@ def build_investigation_prompt(alert, retrieved_chunks):
             "incident_confirmation"
         ]
     }
+
+    event_level_evidence = get_event_level_evidence(alert, events_df)
 
     knowledge_context = [
         {
@@ -94,12 +150,23 @@ ORIGINAL META-ALERT EVIDENCE:
 RETRIEVED MITRE KNOWLEDGE:
 {json.dumps(knowledge_context, indent=2)}
 
+EVENT-LEVEL ORIGINAL EVIDENCE:
+{json.dumps(event_level_evidence, indent=2)}
+
 Return ONLY one valid JSON object containing these six fields:
 {json.dumps(REQUIRED_FIELDS)}
 
 Rules:
 - Use only the supplied evidence and retrieved knowledge.
 - Never invent IP addresses, usernames, timestamps, commands or events.
+- Treat each event record as a separate source of evidence.
+- Attribute every IP address only to the event whose original description contains it.
+- Never transfer an IP address, username, hostname or other attribute between events.
+- If an event has no IP address in its original evidence, state: Not available in source evidence.
+- Describe the number and type of events exactly as supplied.
+- Do not turn one failed attempt into multiple attempts.
+- Identify which event supports each factual statement.
+- Correlation does not mean both events share every attribute.
 - Clearly distinguish original observed evidence from retrieved knowledge.
 - Retrieval similarity scores are relevance indicators, not proof.
 - Do not treat a retrieved technique as a confirmed MITRE mapping.
@@ -143,6 +210,97 @@ def validate_analysis(response_text):
     return analysis
 
 
+
+def validate_event_ip_attribution(analysis, event_records):
+    """Reject invented IPs and explicit cross-event IP attribution."""
+
+    ip_to_events = {}
+
+    for position, event in enumerate(event_records, start=1):
+        reference = str(event.get("event_reference", f"event_{position}"))
+        match = re.search(r"event_(\d+)", reference, re.IGNORECASE)
+        event_label = int(match.group(1)) if match else position
+
+        source_ip = str(event.get("source_ip", ""))
+        observed_ips = set(
+            re.findall(r"\b(?:\d{1,3}\.){3}\d{1,3}\b", source_ip)
+        )
+
+        for ip_address in observed_ips:
+            ip_to_events.setdefault(ip_address, set()).add(event_label)
+
+    analysis_text = " ".join(
+        str(analysis.get(field, ""))
+        for field in REQUIRED_FIELDS
+    )
+
+    reported_ips = set(
+        re.findall(r"\b(?:\d{1,3}\.){3}\d{1,3}\b", analysis_text)
+    )
+
+    unsupported_ips = reported_ips - set(ip_to_events)
+
+    if unsupported_ips:
+        raise ValueError(
+            "Unsupported IP address(es) in AI analysis: "
+            + ", ".join(sorted(unsupported_ips))
+        )
+
+    for field in REQUIRED_FIELDS:
+        text = str(analysis.get(field, ""))
+
+        sentences = re.split(r"(?<=[.!?])\s+", text)
+
+        for sentence in sentences:
+            sentence_ips = set(
+                re.findall(r"\b(?:\d{1,3}\.){3}\d{1,3}\b", sentence)
+            )
+
+            if not sentence_ips:
+                continue
+
+            event_mentions = {
+                int(number)
+                for number in re.findall(
+                    r"\bevent\s+(\d+)\b",
+                    sentence,
+                    re.IGNORECASE
+                )
+            }
+
+            for ip_address in sentence_ips:
+                supported_events = ip_to_events[ip_address]
+
+                incorrectly_attributed = (
+                    event_mentions - supported_events
+                )
+
+                if incorrectly_attributed:
+                    raise ValueError(
+                        f"IP attribution error in {field}: "
+                        f"{ip_address} belongs to event(s) "
+                        f"{sorted(supported_events)}, but the sentence "
+                        f"also attributes it to event(s) "
+                        f"{sorted(incorrectly_attributed)}."
+                    )
+
+                if (
+                    len(supported_events) < len(event_records)
+                    and re.search(
+                        r"\b(?:both|each)\s+(?:of\s+)?"
+                        r"(?:the\s+)?(?:events|authentication events)\b",
+                        sentence,
+                        re.IGNORECASE
+                    )
+                ):
+                    raise ValueError(
+                        f"Possible cross-event IP attribution in {field}: "
+                        f"{ip_address} is not present in every event."
+                    )
+
+    return True
+
+
 def main():
     print("=" * 65)
     print("RAG-ASSISTED SOC META-ALERT INVESTIGATION")
@@ -151,9 +309,17 @@ def main():
     if not INPUT_FILE.exists():
         raise FileNotFoundError(f"Input dataset not found: {INPUT_FILE}")
 
+    if not NORMALIZED_EVENTS_FILE.exists():
+        raise FileNotFoundError(
+            f"Normalized events dataset not found: {NORMALIZED_EVENTS_FILE}"
+        )
+
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     df = pd.read_csv(INPUT_FILE, keep_default_na=False)
+    events_df = pd.read_csv(NORMALIZED_EVENTS_FILE, keep_default_na=False)
+
+    print(f"Original events loaded: {len(events_df)}")
 
     print(f"Meta-alerts loaded: {len(df)}")
 
@@ -202,12 +368,23 @@ def main():
 
             prompt = build_investigation_prompt(
                 alert,
-                retrieved_chunks
+                retrieved_chunks,
+                events_df
             )
 
             response = generate_llm_response(prompt)
 
             analysis = validate_analysis(response)
+
+            event_level_evidence = get_event_level_evidence(
+                alert,
+                events_df
+            )
+
+            validate_event_ip_attribution(
+                analysis,
+                event_level_evidence
+            )
 
             result.update(analysis)
             result["analysis_status"] = "Success"
