@@ -1,0 +1,18 @@
+{
+    "incident_id": "SYNTHETIC-NEGATIVE-TEST-001",
+    "scenario_type": "Synthetic lab demonstration",
+    "incident_confirmation": "Not confirmed",
+    "confirmation_basis": "One or more required evidence conditions were not met.",
+    "checks": {
+        "at_least_three_failed_logins": false,
+        "successful_login_after_failures": true,
+        "same_account_host_and_source_ip": true,
+        "powershell_after_successful_login": true
+    },
+    "matching_sequences": [],
+    "total_events_reviewed": 3,
+    "failed_login_count": 1,
+    "source_ip": "192.168.1.100",
+    "analyst_review_required": true,
+    "real_world_incident": false
+}

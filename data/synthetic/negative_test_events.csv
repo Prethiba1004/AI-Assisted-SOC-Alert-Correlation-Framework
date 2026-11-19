@@ -1,0 +1,4 @@
+timestamp,source,hostname,username,event_id,description
+2026-11-19 09:00:00,Windows Security,WINDOWS-LAB,administrator,4625,Failed logon from 192.168.1.100
+2026-11-19 09:02:00,Windows Security,WINDOWS-LAB,administrator,4624,Successful logon from 192.168.1.100
+2026-11-19 09:03:00,Windows Sysmon,WINDOWS-LAB,administrator,1,Suspicious PowerShell execution with encoded command after successful logon

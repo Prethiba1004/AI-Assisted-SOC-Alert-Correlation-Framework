@@ -1,0 +1,2 @@
+incident_id,scenario_type,incident_confirmation,confirmation_basis,total_events_reviewed,failed_login_count,source_ip,analyst_review_required,real_world_incident
+SYNTHETIC-INCIDENT-001,Synthetic lab demonstration,Confirmed,All predefined synthetic evidence conditions passed.,5,3,192.168.1.100,True,False

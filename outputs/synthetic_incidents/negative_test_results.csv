@@ -1,0 +1,2 @@
+incident_id,scenario_type,incident_confirmation,confirmation_basis,total_events_reviewed,failed_login_count,source_ip,analyst_review_required,real_world_incident
+SYNTHETIC-NEGATIVE-TEST-001,Synthetic lab demonstration,Not confirmed,One or more required evidence conditions were not met.,3,1,192.168.1.100,True,False

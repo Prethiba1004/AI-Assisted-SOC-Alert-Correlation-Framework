@@ -66,3 +66,27 @@ Independent educational research implementation. Not an official implementation 
 
 ## Disclaimer
 For educational and research purposes. Review all outputs before using them for operational security decisions.
+
+## Synthetic Incident Confirmation Demonstration
+
+A separate rule-based engine evaluates related synthetic security events before assigning an incident confirmation status.
+
+### Evidence Conditions
+- At least three failed Windows logins (Event ID 4625).
+- Successful login (Event ID 4624) after previous failures.
+- Matching account, hostname, and source IP.
+- PowerShell execution (Sysmon Event ID 1) after successful login.
+
+All four conditions must pass for the synthetic scenario to be marked Confirmed.
+
+### Demonstration Results
+- Positive synthetic test: 5 events, Confirmed.
+- Negative synthetic test: 3 events, Not confirmed.
+
+### Run the Engine
+    python src\incident_confirmation_engine.py data\synthetic\confirmed_incident_events.csv
+    python src\incident_confirmation_engine.py data\synthetic\negative_test_events.csv
+
+Detailed explanation: outputs/reports/incident_confirmation_explainer.md
+
+**Important:** These are manually created synthetic events. The three-failure threshold is a demonstration rule, not a universal SOC standard. Results do not represent a real-world incident. Human analyst review is required. The original three meta-alerts remain Not confirmed.
